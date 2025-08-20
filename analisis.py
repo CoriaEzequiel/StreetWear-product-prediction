@@ -9,6 +9,21 @@ import joblib
 
 
 df = pd.read_csv("saleOrders.csv")
+#Normalizo
+df["color"] = df["color"].str.strip().str.lower()
+colores_map = {
+    "negra": "negro",
+    "blanca": "blanco",
+    "azules": "azul",
+    "verdes": "verde",
+    "rosas": "rosa",
+    "amarillas": "amarillo",
+    "grises": "gris",
+    "rojas": "rojo"
+}
+df["color"] = df["color"].replace(colores_map)
+
+df["talle"] = df["talle"].str.strip().str.upper()
 
 #  Features y target
 X = df[["marca", "categoria", "talle", "color", "precio"]]
@@ -50,7 +65,7 @@ print(f" - R2 (coeficiente de determinación): {r2:.2f}")
 # 9. Guardar modelo entrenado
 joblib.dump(model, "modelo_producto_estrella.pkl")
 
-# predicción con un nuevo ítem
+# predicción de prueba
 nuevo_item = pd.DataFrame([{
     "marca": "Nike",
     "categoria": "remera_dri-fit",
@@ -63,9 +78,16 @@ remera_nike_x_duki = pd.DataFrame([{
     "marca": "Nike",
     "categoria": "remera_dri-fita",
     "talle": "XL",
-    "color": "Negro",
+    "color": "Negra",
     "precio": 65
 }])
+#agrego nuevos productos
+nuevos_items = pd.DataFrame([
+    {"marca": "Nike", "categoria": "remera_dri-fit", "talle": "M", "color": "Blanca", "precio": 50},
+    {"marca": "Nike", "categoria": "remera_dri-fita", "talle": "XL", "color": "Negra", "precio": 65},
+    {"marca": "Adidas", "categoria": "remera_climalite", "talle": "L", "color": "Negro", "precio": 58}
+])
 
-prediccion = model.predict(remera_nike_x_duki)
-print(f"\n Predicción de ventas para nuevo item: {prediccion[0]:.0f} unidades")
+predicciones = model.predict(nuevos_items)
+for item, pred in zip(nuevos_items.to_dict(orient="records"), predicciones):
+    print(f"Predicción para {item['marca']} {item['categoria']} {item['talle']} {item['color']}: {pred:.0f} unidades")
