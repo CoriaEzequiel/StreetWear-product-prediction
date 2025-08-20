@@ -1,0 +1,69 @@
+#os
+.DS_Store
+Thumbs.db
+desktop.ini
+
+#archivos python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+
+#env
+
+.env/
+
+
+
+# cfg
+*.log
+*.pot
+*.pyc
+
+# datos
+/mnt/
+/data/
+/output/
+/datasets/
+/results/
+*.tsv
+*.xlsx
+*.xls
+*.json
+*.xml
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# packages
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+
+# temps
+*.tmp
+*.temp
+*.bak
+
+# cfg
+*.env
+config.yaml
+config.json
+
+
+*.zip
+*.tar
+*.tar.gz
